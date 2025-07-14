@@ -145,7 +145,7 @@
 
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzgZ5k5qeDmhjxsuQB4mfZmV1VcnpMLfwtcMMPbbSIAlVNxQ4h5-SAKZ7ijhSHPQEqG/exec";
-    const ADMIN_PASSWORD = "duong123"; // 🔐 Thay bằng mật khẩu bí mật của bạn
+    const ADMIN_PASSWORD = "eatmaccounyearamiute"; //
 
     function sendMessage() {
       const msg = document.getElementById("input").value.trim();
@@ -167,7 +167,7 @@
     function showMessages() {
       const entered = prompt("🔒 Nhập mật khẩu để xem tất cả tin nhắn:");
       if (entered !== ADMIN_PASSWORD) {
-        alert("Sai mật khẩu. Bạn không thể xem tin nhắn.");
+        alert("Thôi đừng cố nữa. Hehe");
         return;
       }
 
@@ -189,7 +189,7 @@
     window.onload = function () {
       const isAdmin = confirm("📥 Bạn có phải là chủ trang không?");
       if (isAdmin) {
-        showMessages(); // Nếu bạn là admin, nhập mật khẩu để xem tin nhắn
+        showMessages(); // Hê
       }
     };
   </script>
