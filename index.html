@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tin nhắn ẩn danh</title>
+  <title>Send your own message</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
@@ -10,33 +10,47 @@
       font-family: 'Poppins', sans-serif;
       padding: 0;
       margin: 0;
-      background: linear-gradient(to right, #bbdefb, #e3f2fd);
+      background: #e0f7fa;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
+      background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+      animation: fadeIn 1.2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     header {
-      background: #2196f3;
+      background: #80deea;
       width: 100%;
-      color: white;
+      color: #004d40;
       padding: 20px;
       text-align: center;
       font-size: 1.8em;
       font-weight: 600;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      animation: slideInDown 0.8s ease-out;
+    }
+
+    @keyframes slideInDown {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     #form {
-      background: white;
+      background: #ffffff;
       padding: 25px;
       border-radius: 15px;
       max-width: 450px;
       width: 90%;
       margin-top: 30px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease-in;
     }
 
     textarea {
@@ -45,27 +59,33 @@
       margin-bottom: 15px;
       padding: 15px;
       font-size: 1em;
-      border: 2px solid #90caf9;
+      border: 2px solid #b2ebf2;
       border-radius: 10px;
       resize: none;
       outline: none;
+      background-color: #f1fefb;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/742/742751.png');
+      background-repeat: no-repeat;
+      background-position: right bottom;
+      background-size: 40px;
     }
 
     button {
       width: 100%;
-      background: linear-gradient(to right, #42a5f5, #1e88e5);
-      color: white;
+      background: linear-gradient(to right, #81d4fa, #4dd0e1);
+      color: #004d40;
       border: none;
       padding: 12px;
       font-size: 1em;
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.2s;
     }
 
     button:hover {
-      background: linear-gradient(to right, #1e88e5, #1565c0);
+      background: linear-gradient(to right, #4dd0e1, #26c6da);
+      transform: scale(1.03);
     }
 
     #messages {
@@ -75,36 +95,50 @@
     }
 
     h3 {
-      color: #0d47a1;
+      color: #00796b;
       text-align: center;
       margin-bottom: 20px;
+      font-size: 1.4em;
     }
 
     .msg {
       background: #ffffff;
       padding: 15px;
       margin-bottom: 15px;
-      border-left: 5px solid #2196f3;
+      border-left: 5px solid #4dd0e1;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
+      transition: transform 0.2s, background 0.3s;
+      position: relative;
+      padding-left: 50px;
     }
 
     .msg:hover {
       transform: translateY(-2px);
+      background: #f0ffff;
+    }
+
+    .msg::before {
+      content: '💌';
+      position: absolute;
+      left: 15px;
+      top: 15px;
+      font-size: 1.2em;
     }
   </style>
 </head>
 <body>
-  <header>💬 Gửi tin nhắn ẩn danh</header>
+  <audio id="sendSound" src="https://www.myinstants.com/media/sounds/message-pop.mp3" preload="auto"></audio>
+
+  <header>💬 Send your own message =)</header>
 
   <div id="form">
-    <textarea id="input" placeholder="Viết điều gì đó bí mật... 💌"></textarea>
-    <button onclick="sendMessage()">📨 Gửi tin nhắn</button>
+    <textarea id="input" placeholder="Your message 💌"></textarea>
+    <button onclick="sendMessage()">📨 send</button>
   </div>
 
   <div id="messages">
-    <h3>Tin nhắn đã nhận</h3>
+    <h3>📬 Tin nhắn đã nhận</h3>
     <div id="list"></div>
   </div>
 
@@ -118,6 +152,7 @@
       messages.unshift(msg);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
       document.getElementById("input").value = "";
+      document.getElementById("sendSound").play();
       renderMessages();
     }
 
