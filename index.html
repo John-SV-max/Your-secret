@@ -92,6 +92,7 @@
       margin-top: 40px;
       max-width: 600px;
       width: 90%;
+      display: none;
     }
 
     h3 {
@@ -130,45 +131,36 @@
 <body>
   <audio id="sendSound" src="https://www.myinstants.com/media/sounds/message-pop.mp3" preload="auto"></audio>
 
-  <header> Send your own message =))</header>
+  <header>💬 Send your own message =)</header>
 
   <div id="form">
     <textarea id="input" placeholder="Your message 💌"></textarea>
-    <button onclick="sendMessage()">📨 Send</button>
+    <button onclick="sendMessage()">📨 send</button>
   </div>
 
   <div id="messages">
-    <h3>📬 Received messages</h3>
+    <h3>📬 Tin nhắn đã nhận</h3>
     <div id="list"></div>
   </div>
 
   <script>
-    const STORAGE_KEY = "ngl_fake_messages";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzgZ5k5qeDmhjxsuQB4mfZmV1VcnpMLfwtcMMPbbSIAlVNxQ4h5-SAKZ7ijhSHPQEqG/exec";
 
     function sendMessage() {
       const msg = document.getElementById("input").value.trim();
       if (!msg) return alert("Bạn chưa nhập nội dung!");
-      const messages = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      messages.unshift(msg);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ message: msg })
+      });
+
       document.getElementById("input").value = "";
       document.getElementById("sendSound").play();
-      renderMessages();
+      alert("Đã gửi thành công! 😄");
     }
-
-    function renderMessages() {
-      const messages = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      const list = document.getElementById("list");
-      list.innerHTML = "";
-      messages.forEach((msg, i) => {
-        const div = document.createElement("div");
-        div.className = "msg";
-        div.textContent = msg;
-        list.appendChild(div);
-      });
-    }
-
-    renderMessages();
   </script>
 </body>
 </html>
